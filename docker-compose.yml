@@ -4,9 +4,9 @@ services:
     environment:
       - PUID=1000
       - PGID=33
-      - WG_HOST=3.8.39.23
+      - WG_HOST=188.132.129.3
       - PASSWORD=obviamente_noes
-      - WG_DEFAULT_DNS=192.168.1.100 # Cambia esto por la IP interna del servidor DNS
+      - WG_DEFAULT_DNS=pihole # Usar el nombre del contenedor del servidor DNS
     image: weejewel/wg-easy
     container_name: wg-easy
     ports:
@@ -19,6 +19,8 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
+    networks:
+      - mi-red-personalizada
 
   dns-server:
     image: pihole/pihole
@@ -37,3 +39,8 @@ services:
     restart: unless-stopped
     cap_add:
       - NET_ADMIN
+    networks:
+      - mi-red-personalizada
+
+networks:
+  mi-red-personalizada:

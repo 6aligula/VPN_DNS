@@ -1,0 +1,11 @@
+buscar que servicio usa el puerto 53
+ss -tulnp | grep :53
+
+detener los servicios que salen por ese puerto:
+sudo systemctl stop systemd-resolved
+sudo systemctl disable systemd-resolved
+
+--------------------------------------------------
+tumbar y volver a levantar los servicios
+docker-compose down
+docker-compose up -d
