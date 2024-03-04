@@ -4,9 +4,17 @@ services:
     environment:
       - PUID=1000
       - PGID=33
-      - WG_HOST=188.132.129.3
-      - PASSWORD=obviamente_noes
-      - WG_DEFAULT_DNS=pihole # Usar el nombre del contenedor del servidor DNS
+      # ⚠️ Required:
+      # Change this to your host's public address
+      - WG_HOST=ip_puvica
+
+      # Optional:
+      - PASSWORD=superpass
+      # - WG_PORT=51820
+      # - WG_DEFAULT_ADDRESS=10.8.0.x
+      - WG_DEFAULT_DNS=8.8.8.8
+      
+    # user: 1000:33
     image: weejewel/wg-easy
     container_name: wg-easy
     ports:
@@ -19,28 +27,3 @@ services:
     sysctls:
       - net.ipv4.ip_forward=1
       - net.ipv4.conf.all.src_valid_mark=1
-    networks:
-      - mi-red-personalizada
-
-  dns-server:
-    image: pihole/pihole
-    container_name: pihole
-    environment:
-      TZ: 'Europe/Madrid'
-      WEBPASSWORD: 'otra_contraseña'
-    volumes:
-      - './etc-pihole/:/etc/pihole/'
-      - './etc-dnsmasq.d/:/etc/dnsmasq.d/'
-    ports:
-      - "53:53/tcp"
-      - "53:53/udp"
-      - "80:80"
-      - "443:443"
-    restart: unless-stopped
-    cap_add:
-      - NET_ADMIN
-    networks:
-      - mi-red-personalizada
-
-networks:
-  mi-red-personalizada:

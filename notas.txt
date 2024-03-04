@@ -49,3 +49,6 @@ comando:
 
 sudo apt update
 sudo apt install resolvconf
+
+
+
